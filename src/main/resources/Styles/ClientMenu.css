@@ -1,0 +1,97 @@
+.menu_container {
+    -fx-background-color: #FFFFFF;
+    -fx-alignment: center;
+}
+
+.left_container {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(two-pass-box, #AAAAAA, 5, 0, 0, 4);
+}
+
+.title_container {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 20 20 0 0;
+    -fx-alignment: top-center;
+    -fx-padding: 10;
+}
+
+.title_container .FontAwesomeIconView {
+    -fx-fill: #132A13;
+}
+
+.title_container Text {
+    -fx-fill: #000000;
+    -fx-font-size: 2em;
+}
+
+.menu_container {
+    -fx-padding: 10 10 10 20;
+    -fx-spacing: 20;
+    -fx-font-size: 0.95em;
+
+
+}
+
+.menu_container Button {
+    -fx-pref-width: 115;
+    -fx-pref-height: 40;
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: #131A13; /* Changed from -fx-fill */
+    -fx-font-size: 1em;
+    -fx-alignment: center-left; /* Changed from -fx-allimnet */
+    -fx-effect: dropshadow(three-pass-box, #DDDDDD, 5, 0, 0, 4); /* Corrected typo in color value */
+}
+
+.menu_container Button:hover {
+    -fx-cursor: hand;
+}
+
+.menu_container Button .FontAwesomeIconView {
+    -fx-fill: #132A13;
+}
+
+.alt_menu_btn {
+    -fx-pref-width: 115;
+    -fx-pref-height: 40;
+    -fx-background-color: #132A13;
+    -fx-text-fill: #FFFFFF; /* Changed from -fx-fill */
+    -fx-font-size: 1.1em;
+    -fx-alignment: center-left;
+    -fx-effect: dropshadow(three-pass-box, #DDDDDD, 5, 0, 0, 4);
+}
+
+.alt_menu_btn .FontAwesomeIconView {
+    -fx-fill-color: #FFFFFF;
+}
+
+.report_container {
+    -fx-background-color: #EEFFEE;
+    -fx-background-radius: 10;
+    -fx-alignment: center;
+    -fx-spacing: 10;
+    -fx-padding: 10 0 10 0;
+}
+
+.report_container Text {
+    -fx-font-weight: bold;
+    -fx-wrap-text: true;
+}
+.report_container Label {
+    -fx-text-alignment: center; /* Corrected typo, changed -fx-text-allimnet to -fx-text-alignment */
+    -fx-wrap-text: true;
+}
+
+.report_container Button {
+    -fx-pref-width: 80; /* Corrected the typo, changed -fx-prof-width to -fx-pref-width */
+    -fx-background-color: #132A13; /* Added missing semicolon */
+    -fx-text-fill: #FFFFFF;
+}
+
+.report_container Button:hover {
+    -fx-cursor: hand;
+}
+
+.report_container .FontAwesomeIconView {
+    -fx-fill: #FFFFFF;
+}

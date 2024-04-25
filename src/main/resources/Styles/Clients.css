@@ -1,0 +1,18 @@
+.clients_continer {
+    -fx-background-color: #EEEE;
+}
+
+.clients_continer Text {
+    -fx-fill: #555555;
+    -fx-font-size: 1.8em;
+}
+
+.clients_continer .list-view {
+    -fx-background-color: #EEEE;
+    -fx-border-width: 0;
+}
+
+.clients_continer .list-cell {
+    -fx-background-color: #EEEE;
+    -fx-padding: 10 0 10 0;
+}
