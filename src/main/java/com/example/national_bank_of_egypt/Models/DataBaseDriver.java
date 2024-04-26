@@ -81,9 +81,6 @@ public class DataBaseDriver {
         }
     }
 
-
-
-
     public ResultSet getAllClientData(){
         Statement statement;
         ResultSet resultSet = null;
@@ -147,7 +144,20 @@ public class DataBaseDriver {
         double balance = 0 ;
         try {
             statement = this.con.createStatement();
-            resultSet = statement.executeQuery("SELECT * FROM savingsAccounts WHERE Owner='"+pAddress+"';");
+            resultSet = statement.executeQuery("SELECT * FROM SavingsAccounts WHERE Owner='"+pAddress+"';");
+            balance = resultSet.getDouble("Balance");
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return balance;
+    }
+    public  double getCheckingccountBalance(String pAddress){
+        Statement statement;
+        ResultSet resultSet;
+        double balance = 0 ;
+        try {
+            statement = this.con.createStatement();
+            resultSet = statement.executeQuery("SELECT * FROM CheckingAccounts WHERE Owner='"+pAddress+"';");
             balance = resultSet.getDouble("Balance");
         } catch (SQLException e){
             e.printStackTrace();
@@ -155,20 +165,44 @@ public class DataBaseDriver {
         return balance;
     }
     // Add or subtract from balance
-    public void updateBalance (String pAdress, double amount, String opration ){
+    public void updateBalanceSaving (String pAdress, double amount, String operation ){
         Statement statement;
         ResultSet resultSet;
         try {
             statement =this.con.createStatement();
-            resultSet = statement.executeQuery("SELECT * FROM SavingsAccounts WHERE owner ='"+pAdress+"';");
+            resultSet = statement.executeQuery("SELECT * FROM SavingsAccounts WHERE Owner ='"+pAdress+"';");
             double newBalance;
-            if (opration.equals("ADD"))  {
+            if (operation.equals("ADD"))  {
                  newBalance = resultSet.getDouble("Balance")+ amount;
-                statement.executeUpdate("UPDATE SavingsAccounts SET Balance"+newBalance+"WHERE Owner='"+pAdress+"';");
+                statement.executeUpdate("UPDATE SavingsAccounts SET Balance = " + newBalance + " WHERE Owner = '" + pAdress + "';");
+
             }else {
                 if (resultSet.getDouble("Balance")>=amount){
                     newBalance = resultSet.getDouble("Balance") - amount;
-                    statement.executeUpdate("UPDATE SavingsAccounts SET Balance"+newBalance+"WHERE Owner='"+pAdress+"';");
+                    statement.executeUpdate("UPDATE SavingsAccounts SET Balance = " + newBalance + " WHERE Owner='" + pAdress + "';");
+
+                }
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+    public void updateBalanceChecking (String pAdress, double amount, String operation ){
+        Statement statement;
+        ResultSet resultSet;
+        try {
+            statement =this.con.createStatement();
+            resultSet = statement.executeQuery("SELECT * FROM CheckingAccounts WHERE Owner ='"+pAdress+"';");
+            double newBalance;
+            if (operation.equals("ADD"))  {
+                newBalance = resultSet.getDouble("Balance")+ amount;
+                statement.executeUpdate("UPDATE CheckingAccounts SET Balance = " + newBalance + " WHERE Owner = '" + pAdress + "';");
+
+            }else {
+                if (resultSet.getDouble("Balance")>=amount){
+                    newBalance = resultSet.getDouble("Balance") - amount;
+                    statement.executeUpdate("UPDATE CheckingAccounts SET Balance = " + newBalance + " WHERE Owner='" + pAdress + "';");
+
                 }
             }
         }catch (SQLException e){
@@ -207,6 +241,15 @@ public class DataBaseDriver {
         try {
             statement = this.con.createStatement();
             statement.executeUpdate("UPDATE SavingsAccounts SET Balance = " + amount + " WHERE Owner = '" + Username + "';");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void RequestLoan(String Username, double amount){
+        Statement statement;
+        try {
+            statement = this.con.createStatement();
+            statement.executeUpdate("UPDATE CheckingAccounts SET Balance = " + amount + " WHERE Owner = '" + Username + "';");
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -3,7 +3,6 @@ package com.example.national_bank_of_egypt.Controllers.Client;
 import com.example.national_bank_of_egypt.Models.Model;
 import com.example.national_bank_of_egypt.Models.Transactions;
 import com.example.national_bank_of_egypt.Views.TransactionCellFactory;
-import javafx.beans.binding.Binding;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -76,18 +75,18 @@ public class DashboardController implements Initializable {
         ResultSet resultSet = Model.getInstance().getDataBaseDriver().searchClient(receiver);
         try{
             if(resultSet.isBeforeFirst()){
-                Model.getInstance().getDataBaseDriver().updateBalance(receiver, amount, "ADD");
+                Model.getInstance().getDataBaseDriver().updateBalanceSaving(receiver, amount, "ADD");
             }
         }catch (Exception e){
             e.printStackTrace();
         }
-            Model.getInstance().getDataBaseDriver().updateBalance(sender, amount, "SUB");
+            Model.getInstance().getDataBaseDriver().updateBalanceSaving(sender, amount, "SUB");
 
             Model.getInstance().getClient().savingAccountProperty().get().setBalance(Model.getInstance().getDataBaseDriver().getSavingsAccountBalance(sender));
             Model.getInstance().getDataBaseDriver().newTransaction(sender, receiver, amount, message);
             username_fld.setText("");
             amount_fld.setText("");
             message_fld.setText("");
-
     }
+
 }

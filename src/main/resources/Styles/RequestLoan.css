@@ -1,0 +1,19 @@
+Button {
+    -fx-background-color: #132A13;
+    -fx-text-fill: #FFFFFF;
+
+    -fx-font-size: 1.2em;
+}
+Text{
+    -fx-font-size: 2em;
+    -fx-pref-width:200;
+
+}
+
+.Loan_container{
+  -fx-background-color: #EEEEEEE;
+}
+
+.done {
+ -fx-text-fill: #00ff1e;
+}

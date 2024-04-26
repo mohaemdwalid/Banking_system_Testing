@@ -6,7 +6,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import java.time.LocalDate;
-import java.util.Locale;
 
 public class Client {
     private final StringProperty firstName;
@@ -46,6 +45,22 @@ public class Client {
     public ObjectProperty<Account> savingAccountProperty() {
 
         return SavingAccount;
+    }
+
+    public String getUserName() {
+        return UserName.get();
+    }
+
+    public String getFirstName() {
+        return firstName.get();
+    }
+
+    public String getLastName() {
+        return lastName.get();
+    }
+
+    public LocalDate getDataCreated() {
+        return dataCreated.get();
     }
 
     public Account getCheckingAccount() {

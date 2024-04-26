@@ -2,15 +2,17 @@ package com.example.national_bank_of_egypt.Views;
 
 import com.example.national_bank_of_egypt.Controllers.Admin.AdminController;
 import com.example.national_bank_of_egypt.Controllers.Client.ClientController;
-import com.example.national_bank_of_egypt.Models.Model;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class ViewFactory {
@@ -151,6 +153,24 @@ public class ViewFactory {
 
         } return createClientViews;
     }
+
+    public  void showMessageWindow(String senderAdress , String messagetext){
+        StackPane pane =new StackPane();
+        VBox vBox = new VBox(5);
+        vBox.setAlignment(Pos.CENTER);
+        Label sender = new Label(senderAdress);
+        Label message  = new Label(messagetext);
+        vBox.getChildren().addAll(sender, message);
+        pane.getChildren().add(vBox);
+        Scene scene = new Scene(pane,300,100);
+        Stage stage = new Stage();
+        stage.getIcons().add(new Image(String.valueOf(getClass().getResource("/Images/icon.png"))));
+        stage.setResizable(false);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Message");
+        stage.setScene(scene);
+        stage.show();
+    }
     private void CreateStage(FXMLLoader loader){
         Scene scene = null;
         try {
@@ -160,7 +180,7 @@ public class ViewFactory {
         }
         Stage stage = new Stage();
         stage.getIcons().add(new Image(String.valueOf(getClass().getResource("/images/icon.png"))));
-        stage.setResizable(false);
+//        stage.setResizable(false);
         stage.setScene(scene);
         stage.setTitle("National Bank of Egypt");
         stage.show();

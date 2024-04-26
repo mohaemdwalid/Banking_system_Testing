@@ -37,6 +37,7 @@ public class Transactions {
         return date;
     }
 
+    public StringProperty messageProperty(){return  message;}
 
 
 }
