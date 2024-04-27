@@ -49,16 +49,27 @@ public class DataBaseDriver {
         return resultSet;
     }
 
-    public void createClient(String fName, String lName, String uName,String password, LocalDate dateCreated) {
+    public void createClient(String fName, String lName, String uName, String password, LocalDate dateCreated) {
         Statement statement;
         try {
             statement = this.con.createStatement();
-            statement.executeUpdate("INSERT INTO Clients(FirstName, LastName, PayeeAddress,Password, Date) " +
+
+            // Check if the username already exists in the Clients table
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM Clients WHERE PayeeAddress = '" + uName + "'");
+            if (resultSet.next()) {
+                // Username already exists, do not insert
+                return;
+            }
+
+            // Username does not exist, proceed with the insertion
+            statement.executeUpdate("INSERT INTO Clients(FirstName, LastName, PayeeAddress, Password, Date) " +
                     "VALUES ('" + fName + "', '" + lName + "', '" + uName + "', '" + password + "', '" + dateCreated.toString() + "')");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
+
 
     public void createCheckingAccount(String owner, String number, double tLimit, double balance) {
         Statement statement;
@@ -181,7 +192,6 @@ public class DataBaseDriver {
                 if (resultSet.getDouble("Balance")>=amount){
                     newBalance = resultSet.getDouble("Balance") - amount;
                     statement.executeUpdate("UPDATE SavingsAccounts SET Balance = " + newBalance + " WHERE Owner='" + pAdress + "';");
-
                 }
             }
         }catch (SQLException e){

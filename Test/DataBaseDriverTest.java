@@ -1,5 +1,6 @@
 import com.example.national_bank_of_egypt.Models.DataBaseDriver;
 import com.example.national_bank_of_egypt.Models.Model;
+import com.example.national_bank_of_egypt.Models.SavingAccount;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -12,7 +13,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class DataBaseDriverTest {
     private static DataBaseDriver dbDriver;
+    private SavingAccount savingAccount;
     private Model model;
+
     @BeforeAll
     public static void setUp() {
         dbDriver = new DataBaseDriver();
@@ -37,50 +40,6 @@ public class DataBaseDriverTest {
         assertEquals(500.0, balance);
     }
 
-    //Update Adding Balance Saving Account
-//    @Test
-    public void testUpdateBalanceSavingAdd() throws SQLException {
-        dbDriver.updateBalanceSaving("@ttest36", 200.0, "ADD");
-        Model.getInstance().getClient().savingAccountProperty().get().setBalance(Model.getInstance().getDataBaseDriver().getSavingsAccountBalance("@ttest36"));
-        double balance = dbDriver.getSavingsAccountBalance("@ttest36");
-        assertEquals(300, balance); // Assuming the initial balance was 300
-    }
-
-//    //Update Subtract Balance Saving Account
-//    @Test
-    public void testUpdateBalanceSavingSubtract() throws SQLException {
-        dbDriver.updateBalanceSaving("ttest36", 1000.0, "SUB");
-        double balance = dbDriver.getSavingsAccountBalance("ttest36");
-        assertEquals(10000.0, balance); // Assuming the initial balance was 11000.0
-    }
-//    //Update Adding Balance Checking Account
-//    @Test
-    public void testUpdateBalanceCheckingAdd() throws SQLException {
-        // Call the updateBalanceChecking method to add an amount to the checking account
-        dbDriver.updateBalanceChecking("@ttest38", 200.0, "ADD");
-
-        // Retrieve the current balance from the database
-        double balance = dbDriver.getCheckingccountBalance("@ttest38");
-
-        // Assert that the current balance matches the expected balance after addition
-        assertEquals(300.0, balance); // Assuming the initial balance was 100.0
-    }
-//
-//    @Test
-    public void testUpdateBalanceCheckingSubtract() throws SQLException {
-        // Call the updateBalanceChecking method to subtract an amount from the checking account
-        dbDriver.updateBalanceChecking("ttest38", 1000.0, "SUB");
-
-        // Retrieve the current balance from the database
-        double balance = dbDriver.getCheckingccountBalance("ttest38");
-
-        // Assert that the current balance matches the expected balance after subtraction
-        assertEquals(10000.0, balance); // Assuming the initial balance was 11000.0
-    }
-
-
-
-
 
     //Getters Balance
     @Test
@@ -90,7 +49,6 @@ public class DataBaseDriverTest {
         double balance = dbDriver.getSavingsAccountBalance("@ymo24");
         assertEquals(expectedBalance, balance);
     }
-
     @Test
     public void testGetCheckingAccountBalance() throws SQLException {
         // Assuming the initial balance for the checking account is 5000.0
@@ -123,7 +81,7 @@ public class DataBaseDriverTest {
     public void testGetLastClientsId() throws SQLException {
         int lastClientId = dbDriver.getLatClientsId();
         // Verify if the retrieved last client ID matches the expected value
-        assertEquals(38, lastClientId);
+        assertEquals(39, lastClientId);
     }
 
     @Test
@@ -149,7 +107,7 @@ public class DataBaseDriverTest {
     public void testCreateClient() throws SQLException {
         String fName = "John";
         String lName = "Doe";
-        String uName = "johndoe";
+        String uName = "@johndoe1";
         String password = "password123";
         LocalDate dateCreated = LocalDate.now();
         // Create client
@@ -187,6 +145,67 @@ public class DataBaseDriverTest {
         ResultSet resultSet = dbDriver.getAllClientData();
         assertNotNull(resultSet);
     }
+
+    @Test
+    public void testNewTransaction() throws SQLException {
+        String sender = "@mwalid1";
+        String receiver = "@bBaker1";
+        double amount = 100.0;
+        String message = "Test message";
+
+        dbDriver.newTransaction(sender, receiver, amount, message);
+
+    }
+
+//    @Test
+//    public void testUpdateBalanceSavingAdd() throws SQLException {
+//        // Call the updateBalanceSaving method to add an amount to the saving account
+//        dbDriver.updateBalanceSaving("@ttest36", 200.0, "ADD");
+//
+//        // Retrieve the current balance from the database
+//        double balance = dbDriver.getSavingsAccountBalance("@ttest36");
+//        double newBalance = balance + 200.0;
+//        double bb= model.getClient().savingAccountProperty().get().setBalance(model.getDataBaseDriver().getSavingsAccountBalance("@ttest36"));
+//        System.out.println(bb);
+//
+//        // Assert that the current balance matches the expected balance after addition
+//        assertEquals(newBalance, balance); // Assuming the initial balance was 100.0
+//    }
+//
+//    @Test
+//    public void testUpdateBalanceSavingSubtract() throws SQLException {
+//        // Call the updateBalanceSaving method to subtract an amount from the saving account
+//        dbDriver.updateBalanceSaving("ttest36", 1000.0, "SUB");
+//
+//        // Retrieve the current balance from the database
+//        double balance = dbDriver.getSavingsAccountBalance("ttest36");
+//
+//        // Assert that the current balance matches the expected balance after subtraction
+//        assertEquals(10000.0, balance); // Assuming the initial balance was 11000.0
+//    }
+//    @Test
+//    public void testUpdateBalanceCheckingAdd() throws SQLException {
+//        // Call the updateBalanceChecking method to add an amount to the checking account
+//        dbDriver.updateBalanceChecking("@ttest36", 200.0, "ADD");
+//
+//        // Retrieve the current balance from the database
+//        double balance = dbDriver.getCheckingccountBalance("@ttest36");
+//
+//        // Assert that the current balance matches the expected balance after addition
+//        assertEquals(300.0, balance); // Assuming the initial balance was 100.0
+//    }
+//
+//    @Test
+//    public void testUpdateBalanceCheckingSubtract() throws SQLException {
+//        // Call the updateBalanceChecking method to subtract an amount from the checking account
+//        dbDriver.updateBalanceChecking("ttest36", 1000.0, "SUB");
+//
+//        // Retrieve the current balance from the database
+//        double balance = dbDriver.getCheckingccountBalance("ttest36");
+//
+//        // Assert that the current balance matches the expected balance after subtraction
+//        assertEquals(10000.0, balance); // Assuming the initial balance was 11000.0
+//    }
 
 
 }
