@@ -23,7 +23,6 @@ public class ClientTest {
         assertEquals(savingAccount, client.savingAccountProperty().get());
         assertEquals(dateCreated, client.dataCreatedProperty().get());
     }
-
     @Test
     public void testGetterMethods() {
         Client client = new Client(fName, lName, uName, checkingAccount, savingAccount, dateCreated);

@@ -3,7 +3,8 @@ import java.sql.*;
 import java.time.LocalDate;
 
 public class DataBaseDriver {
-    private Connection con;
+    public Connection con;
+
 
     public DataBaseDriver(){
         try {
@@ -254,4 +255,6 @@ public class DataBaseDriver {
             e.printStackTrace();
         }
     }
+
+
 }

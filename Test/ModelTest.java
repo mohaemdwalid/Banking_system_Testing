@@ -1,5 +1,4 @@
 import com.example.national_bank_of_egypt.Models.Client;
-import com.example.national_bank_of_egypt.Models.DataBaseDriver;
 import com.example.national_bank_of_egypt.Models.Model;
 import com.example.national_bank_of_egypt.Models.Transactions;
 import javafx.collections.FXCollections;
@@ -19,13 +18,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ModelTest {
     private Model model;
-    private  ObservableList<Transactions> latesTrans;
-
-    private Transactions transactions;
-    private DataBaseDriver dataBaseDriver;
-
-
-
     @BeforeEach
     void setUp() {
         // Initialize a new Model instance before each test
@@ -151,22 +143,16 @@ class ModelTest {
 
     @Test
     void prepareTransactions() {
-        // Set up test data
         ObservableList<Transactions> transactions = FXCollections.observableArrayList();
-        int limit = 10; // Adjust the limit as needed
-
-        // Create a connection to the test database
+        int limit = 10;
         try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/test_db", "username", "password")) {
-            // Insert test data into the database
             insertTestData(connection);
 
-            // Call the method under test
             Model model = new Model();
             model.prepareTransactions(transactions, limit);
 
-            // Verify the transactions list
-            assertEquals(3, transactions.size()); // Adjust the expected size according to your test data
-            Transactions firstTransaction = transactions.get(0); // Adjust index and properties as per your test data
+            assertEquals(3, transactions.size());
+            Transactions firstTransaction = transactions.get(0);
             assertEquals("sender1", firstTransaction.getSender());
             assertEquals("receiver1", firstTransaction.getReceiver());
             assertEquals(100.0, firstTransaction.getAmount());
@@ -177,7 +163,6 @@ class ModelTest {
             e.printStackTrace();
         }
     }
-
     // Helper method to insert test data into the database
     private void insertTestData(Connection connection) throws SQLException {
         String insertQuery = "INSERT INTO transactions (Sender, Receiver, Amount, Date, Message) VALUES (?, ?, ?, ?, ?)";

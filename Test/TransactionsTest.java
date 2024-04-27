@@ -19,5 +19,10 @@ public class TransactionsTest {
         assertEquals(amount, transaction.amountProperty().get(), 0.01);
         assertEquals(date, transaction.dateProperty().get());
         assertEquals(message, transaction.messageProperty().get());
+        assertEquals(sender, transaction.getSender());
+        assertEquals(receiver, transaction.getReceiver());
+        assertEquals(amount, transaction.getAmount(), 0.01);
+        assertEquals(date, transaction.getDate());
+        assertEquals(message, transaction.getMessage());
     }
 }

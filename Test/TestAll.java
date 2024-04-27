@@ -8,7 +8,7 @@ import org.junit.platform.suite.api.SuiteDisplayName;
         AccountTest.class,
         CheckingAccountTest.class,
         ClientTest.class,
-        databasedrivertest.class,
+        DataBaseDriverTest.class,
         ModelTest.class,
         SavingAccountTest.class,
         TransactionsTest.class
