@@ -17,10 +17,6 @@ public class Transactions {
         this.date = new SimpleObjectProperty<>(date);
         this.message = new SimpleStringProperty(message);
     }
-
-
-
-
     public StringProperty senderProperty() {
         return sender;
     }
@@ -39,5 +35,43 @@ public class Transactions {
 
     public StringProperty messageProperty(){return  message;}
 
+    public String getSender() {
+        return sender.get();
+    }
 
+    public void setSender(String sender) {
+        this.sender.set(sender);
+    }
+
+    public String getReceiver() {
+        return receiver.get();
+    }
+
+    public void setReceiver(String receiver) {
+        this.receiver.set(receiver);
+    }
+
+    public double getAmount() {
+        return amount.get();
+    }
+
+    public void setAmount(double amount) {
+        this.amount.set(amount);
+    }
+
+    public LocalDate getDate() {
+        return date.get();
+    }
+
+    public void setDate(LocalDate date) {
+        this.date.set(date);
+    }
+
+    public String getMessage() {
+        return message.get();
+    }
+
+    public void setMessage(String message) {
+        this.message.set(message);
+    }
 }

@@ -1,7 +1,6 @@
 Button {
     -fx-background-color: #132A13;
     -fx-text-fill: #FFFFFF;
-
     -fx-font-size: 1.2em;
 }
 Text{
@@ -11,7 +10,7 @@ Text{
 }
 
 .Loan_container{
-  -fx-background-color: #EEEEEEE;
+  -fx-background-color: #EEEEEE;
 }
 
 .done {

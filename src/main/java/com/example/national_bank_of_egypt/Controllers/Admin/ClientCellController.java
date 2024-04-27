@@ -30,7 +30,5 @@ public class ClientCellController implements Initializable {
         sv_acc_lbl.textProperty().bind(client.savingAccountProperty().asString());
         data_lbl.textProperty().bind(client.dataCreatedProperty().asString());
 
-
-
     }
 }

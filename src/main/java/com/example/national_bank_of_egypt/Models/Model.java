@@ -1,14 +1,10 @@
 package com.example.national_bank_of_egypt.Models;
 
-import com.example.national_bank_of_egypt.Views.AccountType;
 import com.example.national_bank_of_egypt.Views.ViewFactory;
-import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import javax.xml.transform.Result;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.time.LocalDate;
 
 public class Model {
@@ -17,26 +13,20 @@ public class Model {
     private final DataBaseDriver dataBaseDriver;
     private final ObservableList<Client> clients;
 
-//    private final ObservableList<Client> client;
-
-
-
-    //Client
     private Client client;
     private final ObservableList<Transactions> latesTrans;
     private final ObservableList<Transactions> allTrans;
     private Boolean clientLoginSuccessFlag;
-    //Admin
     private Boolean AdminLoginSuccessFlag;
 
-    private Model(){
+    public Model(){
         this.viewFactory = new ViewFactory();
         this.dataBaseDriver = new DataBaseDriver();
         this.clientLoginSuccessFlag =false;
+        this.AdminLoginSuccessFlag = false;
         this.client = new Client("","","",null,null,null);
         this.latesTrans = FXCollections.observableArrayList();
         this.allTrans = FXCollections.observableArrayList();
-        this.AdminLoginSuccessFlag = false;
         this.clients = FXCollections.observableArrayList();
 
     }
@@ -46,7 +36,7 @@ public class Model {
         }
         return model;
     }
-
+    // GETTER
     public ViewFactory getViewFactory() {
         return viewFactory;
     }
@@ -58,116 +48,25 @@ public class Model {
     public Boolean getClientLoginSuccessFlag() {
         return this.clientLoginSuccessFlag;
     }
-
-    public void setClientLoginSuccessFlag(Boolean clientLoginSuccessFlag) {
-        this.clientLoginSuccessFlag = clientLoginSuccessFlag;
-    }
-
     public Client getClient() {
         return client;
-    }
-    public void evaluateClientCred(String userName, String password) {
-        CheckingAccount checkingAccount;
-        SavingAccount savingAccount;
-        ResultSet resultSet = dataBaseDriver.getClientDate(userName, password);
-        try {
-            if (resultSet.isBeforeFirst()) {
-                this.client.firstNameProperty().set(resultSet.getString("FirstName"));
-                this.client.lastNameProperty().set(resultSet.getString("LastName"));
-                this.client.userNameProperty().set(resultSet.getString("PayeeAddress"));
-                String[] dataParts = resultSet.getString("Date").split("-");
-                LocalDate date = LocalDate.of(Integer.parseInt(dataParts[0]), Integer.parseInt(dataParts[1]), Integer.parseInt(dataParts[2]));
-                this.client.dataCreatedProperty().set(date);
-                checkingAccount =getCheckingAccount(userName);
-                savingAccount = getSavingAccount(userName);
-                this.client.checkingAccountProperty().set(checkingAccount);
-                this.client.savingAccountProperty().set(savingAccount);
-                this.clientLoginSuccessFlag = true;
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-    private void prepareTransactions(ObservableList<Transactions> transactions,int limit){
-        ResultSet resultSet = dataBaseDriver.getTransaction(this.client.userNameProperty().get(),limit);
-        try {
-            while (resultSet.next()){
-                String sender = resultSet.getString("Sender");
-                String receiver = resultSet.getString("Receiver");
-                double amount = resultSet.getDouble("Amount");
-                String[] dataParts = resultSet.getString("Date").split("-");
-                LocalDate date = LocalDate.of(Integer.parseInt(dataParts[0]), Integer.parseInt(dataParts[1]), Integer.parseInt(dataParts[2]));
-                String message = resultSet.getString("Message");
-                transactions.add(new Transactions(sender, receiver, amount,date,message));
-
-            }
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    public void setLatesTrans(){
-
-        prepareTransactions(this.latesTrans,4);
-    }
-    public ObservableList<Transactions> getLatesTrans(){
-        return latesTrans;
-    }
-    public void setAllTrans(){
-
-        prepareTransactions(this.allTrans,-1);
     }
 
     public ObservableList<Transactions> getAllTrans() {
         return allTrans;
     }
 
+    public ObservableList<Transactions> getLatesTrans(){
+        return latesTrans;
+    }
 
     public Boolean getAdminLoginSuccessFlag() {
         return this.AdminLoginSuccessFlag;
     }
-
-    public void setAdminLoginSuccessFlag(Boolean adminLoginSuccessFlag) {
-        AdminLoginSuccessFlag = adminLoginSuccessFlag;
-    }
-    public void evaluateAdminCred(String userName, String password) {
-        ResultSet resultSet = dataBaseDriver.getAdminDate(userName, password);
-        try {
-            if (resultSet.isBeforeFirst()) {
-                this.AdminLoginSuccessFlag = true;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
     public ObservableList<Client> getClients() {
         return clients;
     }
 
-    public void setClient() {
-        CheckingAccount checkingAccount;
-        SavingAccount savingAccount;
-        ResultSet resultSet = dataBaseDriver.getAllClientData();
-        try {
-            while (resultSet.next()){
-                String fname = resultSet.getString("FirstName");
-                String lname = resultSet.getString("LastName");
-                String PAddress = resultSet.getString("PayeeAddress");
-                String[] dataParts = resultSet.getString("Date").split("-");
-                LocalDate date = LocalDate.of(Integer.parseInt(dataParts[0]), Integer.parseInt(dataParts[1]), Integer.parseInt(dataParts[2]));
-                checkingAccount =getCheckingAccount(PAddress);
-                savingAccount = getSavingAccount(PAddress);
-                clients.add(new Client(fname,lname,PAddress,checkingAccount,savingAccount,date));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    //Utility
     public  CheckingAccount getCheckingAccount(String PAddress){
         CheckingAccount account = null;
         ResultSet resultSet = dataBaseDriver.getCheckingAccountData(PAddress);
@@ -194,6 +93,82 @@ public class Model {
         }
         return account;
     }
+
+    public void setClientLoginSuccessFlag(Boolean clientLoginSuccessFlag) {
+        this.clientLoginSuccessFlag = clientLoginSuccessFlag;
+    }
+
+    public void evaluateClientCred(String userName, String password) {
+        CheckingAccount checkingAccount;
+        SavingAccount savingAccount;
+        ResultSet resultSet = dataBaseDriver.getClientDate(userName, password);
+        try {
+            if (resultSet.isBeforeFirst()) {
+                this.client.firstNameProperty().set(resultSet.getString("FirstName"));
+                this.client.lastNameProperty().set(resultSet.getString("LastName"));
+                this.client.userNameProperty().set(resultSet.getString("PayeeAddress"));
+                String[] dataParts = resultSet.getString("Date").split("-");
+                LocalDate date = LocalDate.of(Integer.parseInt(dataParts[0]), Integer.parseInt(dataParts[1]), Integer.parseInt(dataParts[2]));
+                this.client.dataCreatedProperty().set(date);
+                checkingAccount =getCheckingAccount(userName);
+                savingAccount = getSavingAccount(userName);
+                this.client.checkingAccountProperty().set(checkingAccount);
+                this.client.savingAccountProperty().set(savingAccount);
+                this.clientLoginSuccessFlag = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void setLatesTrans(){
+        prepareTransactions(this.latesTrans,4);
+    }
+    public void setAllTrans(){
+
+        prepareTransactions(this.allTrans,-1);
+    }
+
+
+
+    public void setAdminLoginSuccessFlag(Boolean adminLoginSuccessFlag) {
+        AdminLoginSuccessFlag = adminLoginSuccessFlag;
+    }
+    public void evaluateAdminCred(String userName, String password) {
+        ResultSet resultSet = dataBaseDriver.getAdminDate(userName, password);
+        try {
+            if (resultSet.isBeforeFirst()) {
+                this.AdminLoginSuccessFlag = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    public void setClient() {
+        CheckingAccount checkingAccount;
+        SavingAccount savingAccount;
+        ResultSet resultSet = dataBaseDriver.getAllClientData();
+        try {
+            while (resultSet.next()){
+                String fname = resultSet.getString("FirstName");
+                String lname = resultSet.getString("LastName");
+                String PAddress = resultSet.getString("PayeeAddress");
+                String[] dataParts = resultSet.getString("Date").split("-");
+                LocalDate date = LocalDate.of(Integer.parseInt(dataParts[0]), Integer.parseInt(dataParts[1]), Integer.parseInt(dataParts[2]));
+                checkingAccount =getCheckingAccount(PAddress);
+                savingAccount = getSavingAccount(PAddress);
+                clients.add(new Client(fname,lname,PAddress,checkingAccount,savingAccount,date));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public ObservableList<Client> searchClient(String UserName){
         ObservableList<Client> searchClient = FXCollections.observableArrayList();
         ResultSet resultSet = dataBaseDriver.searchClient(UserName);
@@ -209,5 +184,21 @@ public class Model {
             e.printStackTrace();
         }
         return searchClient;
+    }
+    public void prepareTransactions(ObservableList<Transactions> transactions,int limit){
+        ResultSet resultSet = dataBaseDriver.getTransaction(this.client.userNameProperty().get(),limit);
+        try {
+            while (resultSet.next()){
+                String sender = resultSet.getString("Sender");
+                String receiver = resultSet.getString("Receiver");
+                double amount = resultSet.getDouble("Amount");
+                String[] dataParts = resultSet.getString("Date").split("-");
+                LocalDate date = LocalDate.of(Integer.parseInt(dataParts[0]), Integer.parseInt(dataParts[1]), Integer.parseInt(dataParts[2]));
+                String message = resultSet.getString("Message");
+                transactions.add(new Transactions(sender, receiver, amount,date,message));
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

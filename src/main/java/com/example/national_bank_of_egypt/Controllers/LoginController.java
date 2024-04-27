@@ -39,7 +39,6 @@ public class LoginController implements Initializable {
                 error_lbl.setText("No such a User.");
             }
         }else {
-
             Model.getInstance().evaluateAdminCred(Username_fld.getText(), password_fld.getText());
             if (Model.getInstance().getAdminLoginSuccessFlag()) {
                 Model.getInstance().getViewFactory().showAdminWindow();

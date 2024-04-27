@@ -14,7 +14,7 @@ public class Client {
 
     private final ObjectProperty<Account> CheckingAccount;
     private final ObjectProperty<Account> SavingAccount;
-    private final ObjectProperty<LocalDate> dataCreated;
+    private final ObjectProperty<LocalDate> dateCreated;
 
     public Client(String fName, String lName, String uName, Account checkingAccount, Account savingAccount, LocalDate dateCreated) {
         this.firstName = new SimpleStringProperty(this, "firstName", fName);
@@ -22,7 +22,7 @@ public class Client {
         this.UserName = new SimpleStringProperty(this, "userName", uName);
         this.CheckingAccount = new SimpleObjectProperty<>(this, "CheckingAccounts", checkingAccount);
         this.SavingAccount = new SimpleObjectProperty<>(this, "SavingsAccounts", savingAccount);
-        this.dataCreated = new SimpleObjectProperty<>(this, "dateCreated", dateCreated);
+        this.dateCreated = new SimpleObjectProperty<>(this, "dateCreated", dateCreated);
     }
 
     public StringProperty firstNameProperty() {
@@ -35,7 +35,7 @@ public class Client {
         return UserName;
     }
     public ObjectProperty<LocalDate> dataCreatedProperty() {
-        return dataCreated;
+        return dateCreated;
     }
 
     public ObjectProperty<Account> checkingAccountProperty() {
@@ -46,7 +46,6 @@ public class Client {
 
         return SavingAccount;
     }
-
     public String getUserName() {
         return UserName.get();
     }
@@ -54,13 +53,12 @@ public class Client {
     public String getFirstName() {
         return firstName.get();
     }
-
     public String getLastName() {
         return lastName.get();
     }
 
     public LocalDate getDataCreated() {
-        return dataCreated.get();
+        return dateCreated.get();
     }
 
     public Account getCheckingAccount() {

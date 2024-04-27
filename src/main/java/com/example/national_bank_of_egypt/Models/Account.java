@@ -7,11 +7,6 @@ import javafx.beans.property.StringProperty;
 
 public class Account {
     private final StringProperty owner;
-
-    public void setBalance(double balance) {
-        this.balance.set(balance);
-    }
-
     private final StringProperty account_number;
     private final DoubleProperty balance;
 
@@ -20,19 +15,15 @@ public class Account {
         this.account_number = new SimpleStringProperty(this,"Account Number",account_number);
         this.balance = new SimpleDoubleProperty(this,"Balance",balance);
     }
-
-
+    public void setBalance(double balance) {
+        this.balance.set(balance);
+    }
     public StringProperty ownerProperty() {
         return owner;
     }
-
-
-
     public StringProperty account_numberProperty() {
         return account_number;
     }
-
-
 
     public DoubleProperty balanceProperty() {
         return balance;

@@ -27,8 +27,8 @@ public class DepositController implements Initializable {
 
     private void onClientSearch(){
         ObservableList<Client> searchResult = Model.getInstance().searchClient(UserName_fld.getText());
-        result_listView.setItems(searchResult);
         result_listView.setCellFactory(clientListView ->  new ClientCellFactory());
+        result_listView.setItems(searchResult);
         client = searchResult.get(0);
     }
     public void onDeposit(){
